@@ -157,7 +157,7 @@ def item_edit_view(request):
     else:
         item_id = request.GET.get('id')
         try:
-            item = Item.objects.get(id = item_id, owner = request.user.id)
+            item = Item.objects.get(id = item_id, owner=request.user)
             item_form = EditItemForm({'id':item_id,'name':item.name, 'description':item.description, 'image':item.image})
             return render(request, 'edit_item.html', {
                 'item_form': item_form
@@ -171,9 +171,12 @@ def item_delete_view(request):
         form = DeleteItemForm(request.POST)
         if form.is_valid():
             item_id = form.cleaned_data['id']
-            i = Item.objects.get(id = item_id)
-            i.delete()
-            return HttpResponseRedirect('/my_items')
+            try:
+                i = Item.objects.get(id=item_id, owner=request.user)
+                i.delete()
+                return HttpResponseRedirect('/my_items?message=Successfully deleted item')
+            except:
+                return HttpResponseRedirect('/my_items?error=Cannot delete this item')
     else:
         return HttpResponseRedirect('/')
 
