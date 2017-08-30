@@ -1,5 +1,5 @@
-# Item Trading Club app
-is a full-stack Python Django app that creates a marketplace for items to be traded.
+# E-book Trading Club app
+is a full-stack Python Django app that creates a marketplace for e-books to be traded.
 
 ### User Stories
 * Unauthenticated users can view all items up for trade.
